@@ -16,8 +16,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const dbUrl=process.env.DB_URL||'mongodb://localhost:27017/yelp-camp';
-
+const dbUrl=process.env.DB_URL;
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
