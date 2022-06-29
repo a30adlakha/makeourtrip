@@ -23,9 +23,7 @@ const reviewRoutes = require('./routes/reviews');
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify: false
 });
 
 const db = mongoose.connection;
