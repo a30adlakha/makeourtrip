@@ -115,7 +115,7 @@ if(port == null || port == "")
 {
   port=3000;
 }
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log('serving on port 3000');
 })
 
