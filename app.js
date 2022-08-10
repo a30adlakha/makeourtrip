@@ -1,8 +1,8 @@
-if (process.env.NODE_ENV !== "production") {
-    require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== "production") {
+//     require('dotenv').config();
+// }
 
-
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -14,19 +14,16 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
-const MongoDBStore = require('connect-mongodb-session')(session);
+const MongoDBStore = require('connect-mongo');
 
-const dbUrl=process.env.DB_URL||'mongodb://localhost:27017/yelp-camp';
-
+const dbUrl=process.env.DB_URL;
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify: false
 });
 
 const db = mongoose.connection;
@@ -48,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
 const store = new MongoDBStore({
-    url: dbUrl,
+    mongoUrl: dbUrl,
     secret,
     touchAfter: 24 * 60 * 60
 });
@@ -110,12 +107,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-let port = process.env.PORT;
-if(port == null || port == "")
-{
-  port=3000;
-}
-app.listen(port, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('serving on port 3000');
 })
 
